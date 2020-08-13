@@ -49,12 +49,12 @@ def build_tree(tree_structure, layer=0, base_key=None):
     edges = []
     for key in tree_structure:
         if type(tree_structure[key]) == dict:
-            key, branching_factor = key
+            key_string, branching_factor = key
             for i in range(branching_factor):
-                next_node = build_tree(tree_structure[key], layer=layer+1, base_key=key)
+                next_node = build_tree(tree_structure[key], layer=layer+1, base_key=key_string)
                 # create edge with current node
                 if current_node:
-                    node_type, relationship = key.split(":")
+                    node_type, relationship = key_string.split(":")
                     edges.append(Edge(current_node, relationship, next_node))
 
         splitted = key.split(":")
