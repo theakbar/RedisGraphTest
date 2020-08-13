@@ -99,8 +99,11 @@ class Graph(object):
         batch_size = 1000
         nodes = self.nodes.values()
         queries = []
-        for i in range(0, max(len(nodes), len(self.edges)), batch_size):
-            queries.append(self._commit(nodes[i:i + batch_size], self.edges[i:i + batch_size]))
+        for i in range(0, len(nodes), batch_size):
+            queries.append(self._commit(nodes[i:i + batch_size], []))
+
+        for i in range(0, len(edges), batch_size):
+            queries.append(self._commit([], self.edges[i:i + batch_size]))
 
         return queries
 
