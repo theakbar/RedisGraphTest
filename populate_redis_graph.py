@@ -7,7 +7,7 @@ from collections import defaultdict
 # Number of custom fields created
 NUM_FIELDS = 100
 # Number of users created
-NUM_USERS = 10
+NUM_USERS = 200
 
 CREATED_START = int(time.time()) - 30*24*60*60
 CREATED_END = int(time.time()) - 15*24*60*60
@@ -49,7 +49,7 @@ def build_tree(tree_structure, branching_factors, base_key=None):
     edges = []
     for key in tree_structure:
         if type(tree_structure[key]) == dict:
-            for i in range(branching_factors[key]):
+            for i in range(random.choice(branching_factors[key])):
                 next_node = build_tree(tree_structure[key], branching_factors, base_key=key)
                 # create edge with current node
                 if current_node:
@@ -95,7 +95,12 @@ if __name__ == '__main__':
                         'Due_Date': range(DUE_START, DUE_END),
                         'created_by:': users,
                         ':assigned_to': users,
-                        "Completed": [True, False],
+                        'Completed': [True, False],
+                        'Comment:contains': {
+                            'created_by:': users,
+                            'likes': range(20),
+                            'Created_At': range(CREATED_START, CREATED_END),
+                        }
                     },
                     ':contains': fields,
                     ':contains': fields,
@@ -106,7 +111,12 @@ if __name__ == '__main__':
                     ':assigned_to': users,
                     'Created_At': range(CREATED_START, CREATED_END),
                     'Due_Date': range(DUE_START, DUE_END),
-                    "Completed": [True, False],
+                    'Completed': [True, False],
+                    'Comment:contains': {
+                        'created_by:': users,
+                        'likes': range(20),
+                        'Created_At': range(CREATED_START, CREATED_END),
+                    }
                 },
                 'created_by:': users,
                 'Created_At': range(CREATED_START, CREATED_END),
@@ -115,7 +125,12 @@ if __name__ == '__main__':
             'Created_At': range(CREATED_START, CREATED_END),
         }
     }
-    branching_factors = {'Portfolio:contains': 10, 'Project:contains': 50, 'Task:contains': 200, 'Subtask:contains': 10}
+    branching_factors = {
+        'Portfolio:contains': [2], 
+        'Project:contains': [4], 
+        'Task:contains': [100], 
+        'Subtask:contains': [5], 
+        'Comment:contains': range(20)}
     build_tree(tree_structure, branching_factors)
     print("built tree")
 
