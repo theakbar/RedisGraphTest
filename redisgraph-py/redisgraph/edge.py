@@ -25,11 +25,12 @@ class Edge(object):
             res += '{' + props + '}'
 
         return res
+        
 
     def __str__(self):
         # Source node.
         if isinstance(self.src_node, Node):
-            res = str(self.src_node)
+            res = '(' + self.src_node.properties['name'] + ')'
         else:
             res = '()'
 
@@ -44,7 +45,7 @@ class Edge(object):
 
         # Dest node.
         if isinstance(self.dest_node, Node):
-            res += str(self.dest_node)
+            res += '(' + self.dest_node.properties['name'] + ')'
         else:
             res += '()'
 

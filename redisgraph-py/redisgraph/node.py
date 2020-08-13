@@ -13,6 +13,12 @@ class Node(object):
         self.label = label
         self.properties = properties
 
+    def get_match(self):
+        return '(' + self.properties['name'] + ':' + self.label + ')'
+
+    def get_condition(self):
+        return self.properties['name'] + '.name = ' + self.properties['name']
+
     def toString(self):
         res = ""
         if self.properties:

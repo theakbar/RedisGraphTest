@@ -89,6 +89,20 @@ class Graph(object):
 
         return self.query(query)
 
+    def _commit_edges(self, nodes, edges):
+        nodes = set([edge.src_node for edge in edges] + [edge.dest_node for edge in edges])
+        query = 'MATCH ' + ", ".join([node.get_match() for node in nodes])
+        query += " WHERE " + " AND ".join([node.get_condition() for node in nodes])
+        query += " CREATE " + ','.join([str(edge) for edge in edges])
+
+        # Discard leading comma.
+        if query[-1] is ',':
+            query = query[:-1]
+
+        print(query)
+
+        return self.query(query)
+
     def commit(self):
         """
         Create entire graph.
@@ -103,7 +117,7 @@ class Graph(object):
             queries.append(self._commit(nodes[i:i + batch_size], []))
 
         for i in range(0, len(self.edges), batch_size):
-            queries.append(self._commit([], self.edges[i:i + batch_size]))
+            queries.append(self._commit_edges([], self.edges[i:i + batch_size]))
 
         return queries
 
