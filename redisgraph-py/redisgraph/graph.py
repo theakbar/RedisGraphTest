@@ -102,7 +102,7 @@ class Graph(object):
         for i in range(0, len(nodes), batch_size):
             queries.append(self._commit(nodes[i:i + batch_size], []))
 
-        for i in range(0, len(edges), batch_size):
+        for i in range(0, len(self.edges), batch_size):
             queries.append(self._commit([], self.edges[i:i + batch_size]))
 
         return queries
