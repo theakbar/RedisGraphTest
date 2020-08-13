@@ -46,7 +46,7 @@ def build_tree(tree_structure, branching_factors, base_key=None):
     global edges
     label = base_key.split(":")[0] if base_key else None
     current_node = Node(label=label, properties={'name': label + get_id(label)}) if base_key else None
-    edges = []
+    local_edges = []
     for key in tree_structure:
         if type(tree_structure[key]) == dict:
             for i in range(random.choice(branching_factors[key])):
@@ -54,7 +54,7 @@ def build_tree(tree_structure, branching_factors, base_key=None):
                 # create edge with current node
                 if current_node:
                     node_type, relationship = key.split(":")
-                    edges.append(Edge(current_node, relationship, next_node))
+                    local_edges.append(Edge(current_node, relationship, next_node))
 
         splitted = key.split(":")
         if len(splitted) == 1:
@@ -63,15 +63,15 @@ def build_tree(tree_structure, branching_factors, base_key=None):
             #left side empty
             next_nodes = tree_structure[key]
             relationship = splitted[1]
-            edges.append(Edge(current_node, relationship, random.choice(next_nodes)))
+            local_edges.append(Edge(current_node, relationship, random.choice(next_nodes)))
         elif len(splitted) == 2 and not splitted[1]:
             #right side empty
             next_nodes = tree_structure[key]
             relationship = splitted[0]
-            edges.append(Edge(random.choice(next_nodes), relationship, current_node))
+            local_edges.append(Edge(random.choice(next_nodes), relationship, current_node))
     if current_node:
         nodes += [current_node]
-        edges += edges
+        edges += local_edges
     return current_node
 
 if __name__ == '__main__':
@@ -137,4 +137,4 @@ if __name__ == '__main__':
 
     add_nodes()
     add_edges()
-    print(redis_graph.commit())
+    print("\n".join(redis_graph.commit()))
