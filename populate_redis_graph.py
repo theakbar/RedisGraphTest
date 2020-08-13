@@ -130,7 +130,8 @@ if __name__ == '__main__':
         'Project:contains': [4], 
         'Task:contains': [100], 
         'Subtask:contains': [5], 
-        'Comment:contains': range(20)}
+        'Comment:contains': range(20)
+    }
     build_tree(tree_structure, branching_factors)
     print("built tree")
 
