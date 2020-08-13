@@ -41,7 +41,7 @@ def get_id(id):
 def named_range(name, length):
     return map(lambda x: name + get_id(name), range(length))
 
-def build_tree(tree_structure, branching_factors, layer=0, base_key=None):
+def build_tree(tree_structure, layer=0, base_key=None):
     global nodes
     global edges
     label = base_key.split(":")[0] if base_key else None
@@ -49,8 +49,9 @@ def build_tree(tree_structure, branching_factors, layer=0, base_key=None):
     edges = []
     for key in tree_structure:
         if type(tree_structure[key]) == dict:
-            for i in range(branching_factors[layer]):
-                next_node = build_tree(tree_structure[key], branching_factors, layer=layer+1, base_key=key)
+            key, branching_factor = key
+            for i in range(branching_factor]):
+                next_node = build_tree(tree_structure[key], layer=layer+1, base_key=key)
                 # create edge with current node
                 if current_node:
                     node_type, relationship = key.split(":")
@@ -82,10 +83,10 @@ if __name__ == '__main__':
     nodes += users + fields
 
     tree_structure = {
-        'Portfolio:contains': {
-            'Project:contains':{
-                'Task:contains':{
-                    'Subtask:contains':{
+        ('Portfolio:contains', 10): {
+            ('Project:contains', 50):{
+                ('Task:contains', 200):{
+                    ('Subtask:contains', 10):{
                         ':contains': fields,
                         ':contains': fields,
                         ':contains': fields,
@@ -115,8 +116,8 @@ if __name__ == '__main__':
             'Created_At': range(CREATED_START, CREATED_END),
         }
     }
-    branching_factors = [10, 50, 200, 10]
-    build_tree(tree_structure, branching_factors)
+    # branching_factors = [10, 50, 200, 10]
+    build_tree(tree_structure)
     print("built tree")
 
     add_nodes()
