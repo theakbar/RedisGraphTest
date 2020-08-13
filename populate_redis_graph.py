@@ -50,7 +50,7 @@ def build_tree(tree_structure, layer=0, base_key=None):
     for key in tree_structure:
         if type(tree_structure[key]) == dict:
             key, branching_factor = key
-            for i in range(branching_factor]):
+            for i in range(branching_factor):
                 next_node = build_tree(tree_structure[key], layer=layer+1, base_key=key)
                 # create edge with current node
                 if current_node:
