@@ -68,7 +68,7 @@ branching_factors = {
     'Comment:contains': range(20)
 }
 ```
-1) We'd add a new child subtree in the Subtask subtrees. The syntax is 'Node_Names:Edge_Name'. In the above example
+First, We'd add a new child subtree in the Subtask subtrees. The syntax is 'Node_Names:Edge_Name'. In the above example
 ```
 'Subtask:contains':{
     ':contains': fields,
@@ -90,7 +90,7 @@ branching_factors = {
 }
 ```
 For each Subtask node we will create View children nodes with a contains relationship, i.e. ```(:Subtask) -[:contains]->(:View)```.
-2) Specify the branching factor. For every child node type, we have to specify a list detailing how many children we might create
+Specify the branching factor. For every child node type, we have to specify a list detailing how many children we might create
 ```
 branching_factors = {
     'Portfolio:contains': [3], 
@@ -102,7 +102,7 @@ branching_factors = {
 }
 ```
 So, each Subtask will have up to 100 views
-3) There are three kinds of properties we can include: outgoing edges, incoming edges, and node properties. For outgoing edges the syntax is ```(:edge_type)``` and incoming we do ```(edge_type:)``` and for the value we provide a list of predefined nodes. For properties, we just don't add a ':' and the value is a list of options for that property.
+There are three kinds of properties we can include: outgoing edges, incoming edges, and node properties. For outgoing edges the syntax is ```(:edge_type)``` and incoming we do ```(edge_type:)``` and for the value we provide a list of predefined nodes. For properties, we just don't add a ':' and the value is a list of options for that property.
 ```
 'View:contains': {
     'viewed:': users,
