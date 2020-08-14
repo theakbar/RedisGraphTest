@@ -17,7 +17,7 @@ class Node(object):
         return '(' + self.properties['name'] + ':' + self.label + ')'
 
     def get_condition(self):
-        return self.properties['name'] + '.name = ' + self.properties['name']
+        return self.properties['name'] + '.name = "' + self.properties['name'] + '"'
 
     def toString(self):
         res = ""
