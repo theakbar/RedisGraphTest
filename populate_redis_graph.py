@@ -137,4 +137,4 @@ if __name__ == '__main__':
 
     add_nodes()
     add_edges()
-    print("\n".join(redis_graph.commit()))
+    print("Done")

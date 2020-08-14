@@ -99,8 +99,6 @@ class Graph(object):
         if query[-1] is ',':
             query = query[:-1]
 
-        print(query)
-
         return self.query(query)
 
     def commit(self):
