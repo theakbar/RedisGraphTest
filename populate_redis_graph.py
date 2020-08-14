@@ -126,11 +126,11 @@ if __name__ == '__main__':
         }
     }
     branching_factors = {
-        'Portfolio:contains': [1], 
-        'Project:contains': [2], 
-        'Task:contains': [2], 
-        'Subtask:contains': [2], 
-        'Comment:contains': range(1)
+        'Portfolio:contains': [3], 
+        'Project:contains': [4], 
+        'Task:contains': [100], 
+        'Subtask:contains': [5], 
+        'Comment:contains': range(20)
     }
     build_tree(tree_structure, branching_factors)
     print("built tree")
