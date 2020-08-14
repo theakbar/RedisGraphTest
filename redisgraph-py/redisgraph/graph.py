@@ -80,13 +80,11 @@ class Graph(object):
         query = 'CREATE '
         for node in nodes:
             query += str(node) + ','
-
         query += ','.join([str(edge) for edge in edges])
 
         # Discard leading comma.
         if query[-1] is ',':
             query = query[:-1]
-
         return self.query(query)
 
     def _commit_edges(self, nodes, edges):
@@ -108,7 +106,7 @@ class Graph(object):
         if len(self.nodes) == 0 and len(self.edges) == 0:
             return None
 
-        batch_size = 1000
+        batch_size = 20
         nodes = self.nodes.values()
         queries = []
         for i in range(0, len(nodes), batch_size):
@@ -147,7 +145,6 @@ class Graph(object):
         """
         if params is not None:
             q = self.build_params_header(params) + q
-
         response = self.redis_con.execute_command("GRAPH.QUERY", self.name, q, "--compact")
         return QueryResult(self, response)
 
